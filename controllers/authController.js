@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/user-model');
+const ownerModel = require('../models/owners-model');
 
 
 module.exports.registerUser = async function (req, res) {
@@ -51,6 +52,29 @@ module.exports.loginUser = async function(req, res){
                 let token = jwt.sign({ email, id: user._id }, process.env.JWT_KEY);
                 res.cookie("token", token);
                 res.redirect('/shop');
+            }else{
+                return res.send("Email or Password incorrect");
+            }
+        })
+
+    }catch(err){
+        res.send(err.message);
+    }
+
+};
+
+module.exports.loginOwner = async function(req, res){
+    try{
+        let {email, password} = req.body;
+        let user = await ownerModel.findOne({email:email});
+        if(!user){
+            return res.send("Email or Password incorrect");
+        }
+        bcrypt.compare(password, user.password, function(err, result){
+            if(result){
+                let token = jwt.sign({ email, id: user._id, isAdmin: true }, process.env.JWT_KEY);
+                res.cookie("token", token);
+                res.redirect('/owners/admin');
             }else{
                 return res.send("Email or Password incorrect");
             }

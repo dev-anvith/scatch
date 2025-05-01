@@ -89,5 +89,14 @@ router.post('/cart/update/:id', isLoggedIn, async (req, res) => {
     }
     await user.save();
     res.redirect('/cart');
+});
+
+router.get('/discounted',isLoggedIn, async (req, res)=>{
+    let products = await productModel.find({discount:{$gt:0}}).sort({discount:-1});
+
+    let success = req.flash("success");
+
+    res.render("shop", { products, success });
 })
+
 module.exports = router;
