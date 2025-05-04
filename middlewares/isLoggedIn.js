@@ -20,7 +20,7 @@ module.exports = async function (req, res, next) {
 
         req.user = user;
         
-        next(); // ✅ Proceed to the next middleware/route
+        next();
     } catch (err) {
         console.error("Auth middleware error:", err);
         req.flash("error", "Something went wrong");

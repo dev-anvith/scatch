@@ -1,0 +1,39 @@
+<%- include('./partials/header') %>
+<div class="w-full h-screen flex items-start px-20 py-20">
+    <div class="w-[25%] flex h-screen flex-col items-start">
+        <div class="flex flex-col">
+            <a class="block w-fit mb-2" href="/owners/admin">All Products</a>
+            <a class="block w-fit mb-2" href="/owners/create">Create new product</a>
+            <a class="block w-fit mb-2" href="/owners/orders">Manage Orders</a>
+            <a class="block w-fit mb-2 text-red-500" href="/owners/logout">Logout</a>
+        </div>
+    </div>
+    <div class="w-[75%] flex flex-col gap-5 h-screen overflow-y-auto">
+        <h2 class="text-2xl font-bold mb-4">All Orders</h2>
+        <% orders.forEach(function(order) { %>
+            <div class="border p-4 rounded shadow bg-white">
+                <h3 class="font-semibold text-lg mb-2">Order ID: <%= order.orderId %></h3>
+                <p><strong>Total Amount:</strong> ₹ <%= order.totalAmount %></p>
+                <p><strong>Status:</strong> <%= order.status %></p>
+                <p><strong>Order Date:</strong> <%= order.orderDate.toDateString() %></p>
+                <div class="mt-2">
+                    <p class="font-medium">Products:</p>
+                    <ul class="list-disc ml-6">
+                        <% order.products.forEach(function(prod) { %>
+                            <li><%= prod.name %> - Quantity: <%= prod.quantity %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="mt-4 flex gap-2">
+                    <form action="/owners/shipped/<%= order._id %>" method="post">
+                        <button class="bg-yellow-500 px-4 py-2 rounded text-white">Shipped</button>
+                    </form>
+                    <form action="/owners/delivered/<%= order._id %>" method="post">
+                        <button class="bg-green-600 px-4 py-2 rounded text-white">Delivered</button>
+                    </form>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+<%- include('./partials/footer') %>

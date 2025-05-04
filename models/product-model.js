@@ -10,7 +10,8 @@ const productSchema = mongoose.Schema({
     },
     bgcolor: String,
     panelcolor: String,
-    textcolor: String
+    textcolor: String,
+    stock: Number
 
 
 });

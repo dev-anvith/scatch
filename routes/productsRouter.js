@@ -4,7 +4,7 @@ const upload = require('../config/multer-config');
 const productModel = require('../models/product-model');
 
 router.post('/create', upload.single('image') , async function(req, res){
-    try{let { name, price, discount, bgcolor, panelcolor, textcolor} = req.body;
+    try{let { name, price, discount,stock, bgcolor, panelcolor, textcolor} = req.body;
 
     let product = await productModel.create({
         image: req.file.buffer,
@@ -13,7 +13,8 @@ router.post('/create', upload.single('image') , async function(req, res){
         discount,
         bgcolor,
         panelcolor,
-        textcolor
+        textcolor,
+        stock
 
     });
     req.flash("success", "Product added succesfully")

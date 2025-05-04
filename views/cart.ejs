@@ -1,4 +1,13 @@
 <%- include('./partials/header') %>
+<% if(success.length>0){ %>
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+        <span class="inline-block mt-1 mb-1 text-white">
+            <%= success %>
+        </span>
+    </div>
+    <% } %>
+
+
     <div class="w-full flex items-start px-20 py-20 gap-10">
 
         <% user.cart.forEach((item)=>{%>
@@ -81,7 +90,7 @@
             <form action=""></form>
             <!-- Checkout Button -->
             <div class="mt-6">
-                <form action="/checkout" method="POST">
+                <form action="/users/checkout" method="POST">
                     <button type="submit"
                         class=" mb-10 px-6 py-3 bg-green-600 hover:bg-green-700 text-white  shadow font-bold">
                         Proceed to Checkout

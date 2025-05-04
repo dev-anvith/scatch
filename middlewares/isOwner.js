@@ -5,7 +5,8 @@ module.exports = function(req, res, next) {
     const token = req.cookies.token;
 
     if (!token) {
-        return res.redirect('/login'); 
+        req.flash("error", "You don't have the access");
+        return res.redirect("/");
     }
 
     try {
